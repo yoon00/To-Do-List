@@ -134,7 +134,8 @@ todoList.addEventListener("click", e => {
   // 할 일 완료 이벤트
   if (e.target.closest(".todo-list-complete-btn")) {
     handleComplete(id);
-    // return;
+    //완료 이벤트 후 리턴으로 삭제 이벤트 차단
+    return;
   }
 
   // 할 일 제거 이벤트
