@@ -172,6 +172,8 @@ function renderTab() {
 // 미완료 탭 이벤트
 incompleteTab.addEventListener("click", () => {
     moveToIncompleteTab();
+    incompleteTab.classList.add("active-tab");
+    completeTab.classList.remove("active-tab");
 });
 
 // 미완료 탭 함수
@@ -183,6 +185,8 @@ function moveToIncompleteTab(){
 // 완료 탭 이벤트
 completeTab.addEventListener("click", () => {
     moveToCompleteTab();
+    completeTab.classList.add("active-tab");
+    incompleteTab.classList.remove("active-tab");
 });
 
 // 완료 탭 함수
