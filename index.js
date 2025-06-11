@@ -9,7 +9,7 @@ const incompleteTab = getNode("#select-incomplete-btn");
 //const addButton = getNode("#add-todo-btn")
 
 // 탭 상태
-let currentTab = "incomplete";
+let currentTab = false;
 
 // "_월 _일" 변환 함수
 // date 문자열이 아닌 date 객체 - new Date()를 써야 객체가 됨, Date() 시 date 문자열
@@ -120,7 +120,7 @@ function handleTodoList(){
   addItemArray(newItem); 
 
   // 할 일 추가 시 미완료 된 탭일 때만 렌더링
-  if (currentTab === "incomplete") {
+  if (currentTab === false) {
     renderItem(todoList, newItem); 
   } 
   input.value = '';
@@ -134,7 +134,7 @@ todoList.addEventListener("click", e => {
   // 할 일 완료 이벤트
   if (e.target.closest(".todo-list-complete-btn")) {
     handleComplete(id);
-    return;
+    // return;
   }
 
   // 할 일 제거 이벤트
@@ -175,7 +175,7 @@ incompleteTab.addEventListener("click", () => {
 
 // 미완료 탭 함수
 function moveToIncompleteTab(){
-  currentTab = "incomplete";
+  currentTab = false;
   renderTab();
 }
 
@@ -186,7 +186,7 @@ completeTab.addEventListener("click", () => {
 
 // 완료 탭 함수
 function moveToCompleteTab(){
-  currentTab = "complete";
+  currentTab = true;
   renderTab();
 }
 
@@ -195,9 +195,7 @@ function init() {
   let todoListArray = getStorage();
 
 // 미완료/완료 필터링
-const filteredListArray = todoListArray.filter(item => {
-  return currentTab === "incomplete" ? !item.complete : item.complete;
-});
+const filteredListArray = todoListArray.filter(item => currentTab ? item.complete : !item.complete);
 
 // 필터링 된 할 일 렌더링
 filteredListArray.forEach(item => {
