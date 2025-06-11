@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODOLIST</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css"
+    />
+
+    <link rel="stylesheet" href="./style.css?v=3" />
+    <link rel="icon" href="./resource/favicon.png" />
+    <script defer type="module" src="./index.js"></script>
+  </head>
+  <body>
+    <!-- 사이드바 버튼 -->
+    <button id="side-menu-btn">
+      <svg
+        width="60"
+        height="60"
+        viewBox="0 0 60 60"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g clip-path="url(#clip0_11_6)">
+          <path
+            d="M7.5 45H52.5V40H7.5V45ZM7.5 32.5H52.5V27.5H7.5V32.5ZM7.5 15V20H52.5V15H7.5Z"
+            fill="#646464"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0_11_6">
+            <rect width="60" height="60" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
+    </button>
+
+    <div class="wrap">
+      <!-- 타이틀 헤더 -->
+      <header>
+        <img src="./resource/teanweeds-title.png" class="title-header-img" />
+      </header>
+
+      <!-- 탭 네비게이션 -->
+      <nav class="select-tab-navigation">
+        <button type="button" id="select-incomplete-btn" class="active-tab">
+          완료하지 않은 작업
+        </button>
+        <button type="button" id="select-complete-btn">완료한 작업</button>
+      </nav>
+
+      <!-- 입력란 section -->
+      <section class="add-todo-section">
+        <!-- 폼 관련 내용 추가 -->
+        <form id="add-todo-form">
+          <button type="button" id="add-todo-btn">+</button>
+          <input
+            id="add-todo-input"
+            type="text"
+            placeholder="오늘 할 일 추가하기. 엔터키를 눌러 추가할 수 있습니다."
+          />
+        </form>
+      </section>
+
+      <!-- todo 리스트 main -->
+      <main>
+        <ul id="todo-list-ul"></ul>
+
+        <!-- 체크 표시 svg는 이거 쓰시면 됩니다. -->
+        <!-- <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_35_85)">
+        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM16.59 7.58L10 14.17L7.41 11.59L6 13L10 17L18 9L16.59 7.58Z" fill="#9CE3A5"/>
+        </g>
+        <defs>
+        <clipPath id="clip0_35_85">
+        <rect width="24" height="24" fill="white"/>
+        </clipPath>
+        </defs>
+        </svg> -->
+      </main>
+    </div>
+  </body>
+</html>
