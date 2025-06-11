@@ -20,7 +20,20 @@ function formatDate(dateObj) {
 
 // 할 일 문자열 생성
 function createItem({ content, id, date, complete }) {
-    // 체크 표시 svg (완료된 경우)
+    // 미완료 svg
+  const uncheckedSvg = 
+        `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_35_88)">
+        <path d="M12 2C6.47 2 2 6.47 2 12C2 17.53 6.47 22 12 22C17.53 22 22 17.53 22 12C22 6.47 17.53 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"fill="#A4A4A4"/>
+        </g>
+        <defs>
+        <clipPath id="clip0_35_88">
+        <rect width="24" height="24" fill="white" />
+        </clipPath>
+        </defs>
+        </svg>`;
+
+    // 완료 svg
   const checkedSvg =     
         `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clip-path="url(#clip0_35_85)">
@@ -33,18 +46,6 @@ function createItem({ content, id, date, complete }) {
         </defs>
         </svg>`;
 
-  // 체크 빈 원 svg (미완료인 경우)
-  const uncheckedSvg = 
-        `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g clip-path="url(#clip0_35_88)">
-        <path d="M12 2C6.47 2 2 6.47 2 12C2 17.53 6.47 22 12 22C17.53 22 22 17.53 22 12C22 6.47 17.53 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"fill="#A4A4A4"/>
-        </g>
-        <defs>
-        <clipPath id="clip0_35_88">
-        <rect width="24" height="24" fill="white" />
-        </clipPath>
-        </defs>
-        </svg>`;
   return `
     <li class="todo-list-cell" data-id="${id}">
       <div class="align-wrap">
@@ -91,7 +92,9 @@ function removeItemArray(id) {
 }
 
 // 할 일 추가 이벤트
+// Form에서 submit event 발생하면 동작(enter, +버튼)
 inputForm.addEventListener("submit", e => {
+  // reload 방지
   e.preventDefault();
   handleTodoList();
 });
@@ -102,6 +105,7 @@ inputForm.addEventListener("submit", e => {
 
 // 할 일 추가 함수
 function handleTodoList(){
+  //공백 입력 금지
   const val = input.value.trim();
   if (val === '') return;
 
@@ -114,6 +118,7 @@ function handleTodoList(){
 
   addItemArray(newItem); 
 
+  // 할 일 추가 시 미완료 된 탭일 때만 렌더링
   if (currentTab === "incomplete") {
     renderItem(todoList, newItem); 
   } 
@@ -121,6 +126,7 @@ function handleTodoList(){
 }
 
 // 할 일 클릭 이벤트
+// 동적으로 생성된 요소들 이벤트 위임(todoList 자체가 동적으로 생성될 시 document에 이벤트)
 todoList.addEventListener("click", e => {
   const id = e.target.closest("li.todo-list-cell").dataset.id;
   
@@ -140,6 +146,7 @@ todoList.addEventListener("click", e => {
 function handleComplete(id){
   let todoListArray = getStorage();
   
+  // 배열이 아니므로 find 사용
   const item = todoListArray.find(item => item.id === id);
   item.complete = !item.complete;
   
@@ -155,6 +162,7 @@ function handleRemove(id){
 
 // 탭에 따라 완료 상태 필터링 후 렌더링
 function renderTab() {
+  // 원래 있던 항목들 비어줌
   todoList.innerHTML = "";
   init();
 }
@@ -185,13 +193,16 @@ function moveToCompleteTab(){
 function init() {
   let todoListArray = getStorage();
 
+// 미완료/완료 필터링
 const filteredListArray = todoListArray.filter(item => {
   return currentTab === "incomplete" ? !item.complete : item.complete;
 });
 
+// 필터링 된 할 일 렌더링
 filteredListArray.forEach(item => {
   renderItem(todoList, item);
 });
 }
 
+// 초기화
 init();
